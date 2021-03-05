@@ -28,6 +28,6 @@ exports.start = () => {
             console.log(`Error : ${err}`);
             process.exit(-1);
         }
-        console.log(`App is running on  http://127.0.0.1:${port}`);
+        console.log(`App is running on  port ${port}`);
     });
 }

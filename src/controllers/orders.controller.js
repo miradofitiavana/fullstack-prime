@@ -18,6 +18,14 @@ exports.create = (req, res) => {
     })
 }
 
+exports.getOrders = (req, res) => {
+    Order.find()
+        .populate('products')
+        .populate('user')
+        .then((data) => res.send(data))
+        .catch(err => console.log(err))
+}
+
 exports.read = (req, res) => {
     let id = req.params.id;
     Order.findById(id)
