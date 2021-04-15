@@ -3,9 +3,14 @@ const Category = require('./../../models/category.model');
 
 module.exports = {
     Query: {
-        products: () => {
-            return Product.find()
-                .populate('categories');
+        products: (parent, args) => {
+            if (args.category) {
+                return Product.find({ categories: args.category })
+                    .populate('categories');
+            } else {
+                return Product.find()
+                    .populate('categories');
+            }
         },
         product: (parent, args) => {
             console.log(args.id)

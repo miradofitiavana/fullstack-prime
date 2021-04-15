@@ -1,17 +1,38 @@
 const Product = require('./../models/product.model');
 
 exports.list = (req, res) => {
-    return Product.find()
-        .populate('categories')
-        .then(data => {
-            res.send({
-                data: data
+    let asc = {};
+    console.log(req.query);
+    if (req.query.sort) {
+        asc = req.query.sort == 'createdAt' ? { createdAt: -1 } : null;
+    }
+    if (req.query.limit) {
+        return Product.find()
+            .populate('categories')
+            .limit(parseInt(req.query.limit))
+            .sort(asc)
+            .then(data => {
+                res.send({
+                    data: data
+                });
+            }).catch((err) => {
+                res.status(500).send({
+                    message: err.message || "Some error occured"
+                })
             });
-        }).catch((err) => {
-            res.status(500).send({
-                message: err.message || "Some error occured"
-            })
-        });
+    } else {
+        return Product.find()
+            .populate('categories')
+            .then(data => {
+                res.send({
+                    data: data
+                });
+            }).catch((err) => {
+                res.status(500).send({
+                    message: err.message || "Some error occured"
+                })
+            });
+    }
 }
 
 exports.create = (req, res) => {

@@ -10,7 +10,7 @@ module.exports = gql`
     imgUrl: String
   }
   extend type Query {
-    products: [Product]
+    products(category: String): [Product]
     product(id: ID!): Product
     findProducts(searchKey: String): [Product]
   }
