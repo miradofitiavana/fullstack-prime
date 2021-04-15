@@ -6,25 +6,28 @@ const userSchema = new Schema(
         firstName: {
             type: String,
             required: true,
-            lowercase: true
         },
         lastName: String,
+        phone: String,
+        address: {
+            address: String,
+            postal_code: String,
+            city: String,
+            country: String
+        },
         email: {
             type: String,
             unique: true
         },
         password: {
             type: String,
-            required: true,
-            minlength: 6
+            required: true
         },
         isAdmin: {
             type: Boolean,
         },
-        age: {
-            type: Number,
-        },
-        orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
+
+        orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
     },
     {
         timestamps: true

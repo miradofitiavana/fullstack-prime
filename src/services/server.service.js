@@ -10,15 +10,21 @@ const apiRouter = require('./../routes');
 const schema = require('./../apollo/schemas');
 const resolvers = require('./../apollo/resolvers');
 const { ApolloServer, gql } = require('apollo-server-express');
+const cors = require('cors');
 
 const graphQLServer = new ApolloServer({
     typeDefs: schema,
-    resolvers
+    resolvers,
+    formatError: (err) => {
+        console.log(err);
+        return ({ message: err.message, status: err.status })
+    },
 });
 
 graphQLServer.applyMiddleware({ app, path: '/graphql' });
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use('/api/v1', apiRouter);
 
